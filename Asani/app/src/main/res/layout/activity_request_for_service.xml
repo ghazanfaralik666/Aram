@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   android:background="@drawable/background_image"
+
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+
+    tools:context="com.example.ghazanfarali.asani.RequestForService">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:id="@+id/scrollView" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_20sdp"
+            android:layout_centerHorizontal="true">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
+
+                android:background="@drawable/bg_edittext"
+                android:layout_gravity="center_horizontal">
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#ffffff"
+                    android:hint="Your Full Name *"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:nextFocusForward="@+id/email"
+                    android:drawableRight="@drawable/ic_user"
+                    android:id="@+id/fullName" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/bg_edittext"
+                android:layout_gravity="center_horizontal">
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#ffffff"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:nextFocusForward="@+id/phone"
+                    android:drawableRight="@drawable/ic_mail"
+                    android:hint="Your Email Address"
+                    android:id="@+id/email" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/bg_edittext"
+                android:layout_gravity="center_horizontal">
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#ffffff"
+                    android:drawableRight="@drawable/ic_smartphone_screen"
+                    android:hint="Your Phone Number *"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:nextFocusForward="@+id/date_time_picker"
+                    android:id="@+id/phone" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:layout_gravity="center_horizontal">
+
+
+                <Button
+                    android:id="@+id/date_time_picker"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/ic_event_date_and_time_symbol"/>
+
+                <TextView
+                    android:id="@+id/date_time_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date and Time"
+                    android:textColor="#ffffff"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:textColorHint="#ffffff"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/bg_edittext"
+                android:layout_gravity="center_horizontal">
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_weight="1"
+                    android:hint="Your Address *"
+                    android:textColor="#ffffff"
+                    android:drawableRight="@drawable/ic_placeholder"
+                    android:textColorHint="#ffffff"
+                    android:inputType="textMultiLine"
+                    android:lines="2"
+
+                    android:minLines="2"
+                    android:gravity="top|left"
+                    android:maxLines="3"
+                    android:id="@+id/address" />
+            </LinearLayout>
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_alignParentBottom="true"
+                android:background="#ffb200"
+                android:textColor="#ffffff"
+                android:id="@+id/submit" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
