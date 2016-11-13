@@ -75,6 +75,14 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         Adapter.setOnItemClickListener(onItemClickListener);
+        TextView termsAndCondition = (TextView)findViewById(R.id.termsAndCondition);
+        termsAndCondition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this,TermsAndCondition.class);
+                startActivity(i);
+            }
+        });
         /*recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {

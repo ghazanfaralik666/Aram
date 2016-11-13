@@ -62,7 +62,7 @@
                 android:textColor="#ffffff"
                 android:paddingTop="5dp"
                 android:textSize="20sp"
-
+                android:id="@+id/termsAndCondition"
                 android:text="Terms &amp; Condition"/>
         </LinearLayout>
     </LinearLayout>
