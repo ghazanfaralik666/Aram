@@ -2,8 +2,6 @@ package com.example.ghazanfarali.asani;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
@@ -12,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -28,14 +25,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,14 +41,26 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     GridLayoutAdapter Adapter;
     CollapsingToolbarLayout collapsingToolbar;
-    GridLayoutAdapter.OnItemClickListener onItemClickListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.MyToolbar);
+        //setSupportActionBar(toolbar);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);\
+        imageFlipper();
+        main_content = (CoordinatorLayout)findViewById(R.id.main_content);
+        collapsingToolbar =
+                (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar);
+        collapsingToolbar.setTitle("Asani");
 
-        AssetManager am = getApplicationContext().getAssets();
+        collapsingToolbar.setCollapsedTitleTextColor(getResources().getColor(R.color.colorAccent));
+        collapsingToolbar.setExpandedTitleColor(getResources().getColor(R.color.colorPrimary));
 
+        collapsingToolbar.setContentScrimColor(getResources().getColor(R.color.colorGreen));
+
+        collapsingToolbar.setExpandedTitleTextAppearance(R.style.expandedappbar);
+        collapsingToolbar.setCollapsedTitleTextAppearance(R.style.collapsedappbar);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -64,32 +70,19 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(Adapter);
 
         prepareMenusData();
-        onItemClickListener = new GridLayoutAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Menus movie = movieList.get(position);
-                Toast.makeText(getApplicationContext(), movie.getMenu_name() + " is selected!", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(MainActivity.this,RequestForService.class);
-                i.putExtra("ServiceName",movie.getMenu_name());
-                startActivity(i);
-            }
-        };
-        Adapter.setOnItemClickListener(onItemClickListener);
-        TextView termsAndCondition = (TextView)findViewById(R.id.termsAndCondition);
-        termsAndCondition.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this,TermsAndCondition.class);
-                startActivity(i);
-            }
-        });
-        /*recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new ClickListener() {
+//        mAdapter = new MenuListAdapter(movieList,MainActivity.this);
+//        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+//        recyclerView.setLayoutManager(mLayoutManager);
+//        recyclerView.setItemAnimator(new DefaultItemAnimator());
+//        recyclerView.setAdapter(mAdapter);
+//
+
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 Menus movie = movieList.get(position);
                 Toast.makeText(getApplicationContext(), movie.getMenu_name() + " is selected!", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(MainActivity.this,RequestForService.class);
-                i.putExtra("ServiceName",movie.getMenu_name());
                 startActivity(i);
             }
 
@@ -97,14 +90,24 @@ public class MainActivity extends AppCompatActivity {
             public void onLongClick(View view, int position) {
 
             }
-        }));*/
+        }));
 
         startService(new Intent(MainActivity.this,TokenService.class));
         startService(new Intent(MainActivity.this,FCMMessageReceiverService.class));
+//        CardView cv = (CardView)findViewById(R.id.first);
+//        cv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent i = new Intent(MainActivity.this,RequestForService.class);
+//                startActivity(i);
+//            }
+//        });
+
+
 
     }
 
-    private final int SPLASH_DISPLAY_LENGTH = 10000;
+    private final int SPLASH_DISPLAY_LENGTH = 3000;
     int count = 0;
     Handler handler;
     public void imageFlipper()
@@ -114,13 +117,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-//
-//                ViewFlipper viewFilpper = (ViewFlipper)collapsingToolbar.findViewById(R.id.viewFilpper);
-//                viewFilpper.setInAnimation(MainActivity.this, R.anim.slide_in_from_left);
-//
-//                viewFilpper.setOutAnimation(MainActivity.this, R.anim.slide_out_to_right);
-//
-//                viewFilpper.showNext();
+
+                ViewFlipper viewFilpper = (ViewFlipper)collapsingToolbar.findViewById(R.id.viewFilpper);
+                viewFilpper.setInAnimation(MainActivity.this, R.anim.slide_in_from_left);
+
+                viewFilpper.setOutAnimation(MainActivity.this, R.anim.slide_out_to_right);
+
+                viewFilpper.showNext();
 
                /* ImageView bgheaders = (ImageView)collapsingToolbar.findViewById(R.id.bgheaders);
                 if(count == 0) {
@@ -140,38 +143,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void prepareMenusData() {
-        Menus movie = new Menus("ic_mason", "Mason","", "");
+        Menus movie = new Menus("mason", "Mason","", "");
         movieList.add(movie);
 
-        movie = new Menus("ic_electrician", "Electrictian","", "");
+        movie = new Menus("electrician", "Electrictian","", "");
         movieList.add(movie);
 
-        movie = new Menus("ic_carpenter", "Carpenter","", "");
+        movie = new Menus("carpainter", "Carpainter","", "");
         movieList.add(movie);
 
-        movie = new Menus("ic_plumber", "Plumber","", "");
+        movie = new Menus("plumber", "Plumber","", "");
         movieList.add(movie);
 
-        movie = new Menus("ic_mechanic", "Mechanic","", "");
+        movie = new Menus("acrepairman", "Ac RepairMen","", "");
         movieList.add(movie);
-
-        movie = new Menus("ic_painter", "Painter","", "");
-        movieList.add(movie);
-
-        /*movie = new Menus("ic_painter", "Construction","", "");
-        movieList.add(movie);
-        movie = new Menus("ic_painter", "Construction","", "");
-        movieList.add(movie);
-        movie = new Menus("ic_painter", "Construction","", "");
-        movieList.add(movie);
-        movie = new Menus("ic_painter", "Construction","", "");
-        movieList.add(movie);
-        movie = new Menus("ic_painter", "Construction","", "");
-        movieList.add(movie);*/
         Adapter.notifyDataSetChanged();
     }
 
-    /*public interface ClickListener {
+    public interface ClickListener {
         void onClick(View view, int position);
 
         void onLongClick(View view, int position);
@@ -218,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
         }
-    }*/
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -227,67 +216,43 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    boolean bottom_sheet = false;
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-       int id = item.getItemId();
-       if (id == R.id.action_settings) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
 
-           if(!bottom_sheet)
-           {
-               LinearLayout bottomSheet = (LinearLayout)findViewById(R.id.bottomSheetLayout);
-               bottomSheet.setVisibility(View.VISIBLE);
-               Adapter.setOnItemClickListener(null);
+            View bottomSheet = main_content.findViewById(R.id.bottomSheetLayout);
+            final BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
 
-               LinearLayout contact_us = (LinearLayout) bottomSheet.findViewById(R.id.contact_us);
-               contact_us.setOnClickListener(new View.OnClickListener() {
+            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+                @Override
+                public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                    // React to state change
+                  //  Toast.makeText(MainActivity.this,"data",Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                    // React to dragging events
+                    //Toast.makeText(MainActivity.this,"datad",Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            Button about_us = (Button) bottomSheet.findViewById(R.id.about_us);
+            about_us.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    Intent i = new Intent(MainActivity.this,ContactUs.class);
+                    behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                    Intent i = new Intent(MainActivity.this,AboutUs.class);
                     startActivity(i);
                 }
             });
-               LinearLayout about_us = (LinearLayout) bottomSheet.findViewById(R.id.about_uss);
-               about_us.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View view) {
-
-                       Intent i = new Intent(MainActivity.this,AboutUs.class);
-                       startActivity(i);
-                   }
-               });
-
-               LinearLayout homes = (LinearLayout) bottomSheet.findViewById(R.id.homes);
-               homes.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View view) {
-
-                       finish();
-                       Intent i = new Intent(MainActivity.this,MainActivity.class);
-                       i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                       i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                       i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                       startActivity(i);
-                   }
-               });
-
-               bottom_sheet = true;
-           }else{
-
-               LinearLayout bottomSheet = (LinearLayout)findViewById(R.id.bottomSheetLayout);
-               bottomSheet.setVisibility(View.INVISIBLE);
-               Adapter.setOnItemClickListener(onItemClickListener);
-                bottom_sheet = false;
-           }
-
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

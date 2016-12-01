@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">Aram</string>
+    <string name="app_name">Asani</string>
     <string name="action_settings">Settings</string>
-    <string name="Tab_Units">Date</string>
-    <string name="Tab_Maps">Time</string>
+
 </resources>

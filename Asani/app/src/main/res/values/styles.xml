@@ -6,7 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="actionBarStyle">@style/MyActionBarLogo</item>
     </style>
 
     <style name="expandedappbar" parent="@android:style/TextAppearance.Medium">
@@ -18,13 +17,6 @@
     <style name="collapsedappbar" parent="@android:style/TextAppearance.Medium">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/colorWhite</item>
-    </style>
-
-
-    <style name="MyActionBarLogo" parent="@style/Widget.AppCompat.Light.ActionBar">
-        <item name="background">@color/colorAccent</item>
-        <item name="logo">@drawable/ic_launcher</item>
-        <item name="displayOptions">useLogo|showHome</item>
     </style>
 
 </resources>
